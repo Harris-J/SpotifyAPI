@@ -9,7 +9,7 @@ access_token = APIrequest.access_token
 
 #I have a local file called APIrequest with my real credential - saving this so I don't forget I did that. Future me will figure out a better way to work with API credentials and tokens (har har)
 
-with open('input.csv', encoding='utf-8', mode='r') as f:
+with open('Tracks_input.csv', encoding='utf-8', mode='r') as f:
     reader = csv.reader(f)
     data = list(reader)
 
@@ -21,16 +21,18 @@ for row in data:
 
     response = requests.get(search_url, headers={'Authorization': f'Bearer {access_token}'})
     response_json = response.json()
-
-    track = response_json['tracks']['items'][0]
-    album_id = track['album']['id']
-
-    album_url = f'https://api.spotify.com/v1/albums/{album_id}'
-
-    response = requests.get(album_url, headers={'Authorization': f'Bearer {access_token}'})
-    response_json = response.json()
-
-    album_name = response_json['name']
+    track = response_json['tracks']['items']
+    
+    if len(track)==0:
+        album_name = 'None Found'
+        
+    else:
+        track = response_json['tracks']['items'][0]
+        album_id = track['album']['id']
+        album_url = f'https://api.spotify.com/v1/albums/{album_id}'
+        response = requests.get(album_url, headers={'Authorization': f'Bearer {access_token}'})
+        response_json = response.json()
+        album_name = response_json['name']
 
     row.append(album_name)
 
