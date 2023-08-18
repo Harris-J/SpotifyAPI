@@ -7,3 +7,12 @@ This Set of files does 2 things.
  GetAllAlbums.py uses the input.csv which should contain rows of  Track,Artist. It will Then output, album appended to the row. ie Track,Artist,Album 
  
    
+Here is a simple flow chart:
+
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
